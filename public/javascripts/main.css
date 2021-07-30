@@ -1,0 +1,24 @@
+#url-shortener {
+  max-width: 600px;
+  padding: 30px;
+  border: 1px solid lightgrey;
+}
+
+.url-image {
+  width:100px;
+  margin: 30px auto;
+}
+
+.btn {
+  width: 150px;
+  font-weight: 600;
+}
+
+input[type="text"]{
+background-color:rgb(230, 230, 230) !important
+}
+
+.form-control::placeholder { 
+  color: gray;
+            
+}
