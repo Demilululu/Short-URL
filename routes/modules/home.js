@@ -17,7 +17,6 @@ router.post('/', async (req, res) => {
 
   if (validUrl.isUri(original_url) === undefined) {
     const error_message = `${original_url} 並非有效的網址，請重新輸入`
-    console.log(error_message)
     return res.render('index', { error_message })
   }
 
@@ -32,7 +31,7 @@ router.post('/', async (req, res) => {
       Urls.create({ original_url, short_url })
         .then(() => res.render('index', { short_url }))
     })
-    .catch((error) => console.log(error))
+    .catch((error) => res.redirect('/'))
 })
 
 router.get('/:code', (req, res) => {
