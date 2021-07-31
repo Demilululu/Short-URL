@@ -22,3 +22,7 @@ background-color:rgb(230, 230, 230) !important
   color: gray;
             
 }
+
+.warnings {
+  color: red;
+}

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const MONGODB_URL = 'mongodb://localhost/shorturl'
+const MONGODB_URL = 'mongodb://localhost/short-url'
 
 mongoose.connect(MONGODB_URL, {useNewUrlParser: true, useUnifiedTopology: true})
 

@@ -1,3 +1,5 @@
+const Urls = require('../../models/shorturl')
+
 function randomIndex(array) {
   let random_Index = Math.floor(Math.random() * array.length)
   return array[random_Index]
@@ -18,4 +20,18 @@ function codeGenerator(length) {
   return code
 }
 
-module.exports = codeGenerator
+async function uniqueURLGenerator() {
+  const url_protocol = 'http://'
+  const url_host = 'www.hahahahaha/'
+  let test_url = url_protocol + url_host + codeGenerator(5)
+
+  await Urls.findOne({ 'short_url': test_url })
+    .then((result) => {
+      if (result) {
+        uniqueURLGenerator()
+      }
+    })
+  return test_url
+}
+
+module.exports = uniqueURLGenerator

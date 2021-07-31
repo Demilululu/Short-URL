@@ -1,11 +1,24 @@
 <div class="container mt-5 mx-auto text-center" id="url-shortener">
-  <h2> URL Shortener</h2>
+  <a href="/">
+    <h2> URL Shortener</h2>
+  </a>
   <img src="/images/url.png" alt="" class="url-image">
 
-  <form action="POST">
+  {{#unless short_url}}
+  <form action="/" method="POST">
     <div class="form-group">
-      <input type="text" class="form-control input-box" placeholder="Input URL here">
+      <input type="text" class="form-control input-box" placeholder="Input URL here" name="original_url">
     </div>
+    <div class="warnings">
+      <p>{{error_message}}</p>
+    </div>
+
     <button class="btn btn-outline-primary" type="submit">Shorten</button>
   </form>
+  {{/unless}}
+
+  {{#if short_url}}
+  <h3>Success! Please use the link:</h3>
+  <a href="{{original_url}}">{{short_url}}</a>
+  {{/if}}
 </div>
