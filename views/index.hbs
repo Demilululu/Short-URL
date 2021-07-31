@@ -19,6 +19,7 @@
 
   {{#if short_url}}
   <h3>Success! Please use the link:</h3>
-  <a href="{{original_url}}">{{short_url}}</a>
+  <a href="{{short_url}}" id="short_url">{{short_url}}</a><br>
+  <button type="button" class="btn btn-primary" id="copy" data-clipboard-target="#short_url">Copy</button>
   {{/if}}
 </div>

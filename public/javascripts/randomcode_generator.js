@@ -8,10 +8,11 @@ function randomIndex(array) {
 
 function codeGenerator(length) {
   const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
+  const upperCaseLetters = lowerCaseLetters.toUpperCase()
   const numbers = '1234567890'
   let collection = []
 
-  collection = collection.concat(...lowerCaseLetters, ...numbers)
+  collection = collection.concat(...lowerCaseLetters,...upperCaseLetters,...numbers)
 
   let code = ""
   for (let i = 0; i < length; i++) {
@@ -21,9 +22,7 @@ function codeGenerator(length) {
 }
 
 async function uniqueURLGenerator() {
-  const url_protocol = 'http://'
-  const url_host = 'www.hahahahaha/'
-  let test_url = url_protocol + url_host + codeGenerator(5)
+  let test_url = codeGenerator(5)
 
   await Urls.findOne({ 'short_url': test_url })
     .then((result) => {

@@ -12,6 +12,7 @@
 .btn {
   width: 150px;
   font-weight: 600;
+  margin-top: 20px;
 }
 
 input[type="text"]{
@@ -26,3 +27,8 @@ background-color:rgb(230, 230, 230) !important
 .warnings {
   color: red;
 }
+
+a { 
+  color: inherit;
+  text-decoration: none; 
+} 

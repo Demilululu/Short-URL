@@ -1,8 +1,10 @@
 const express = require('express')
-const router = express.Router()
 const validUrl = require('valid-url')
-const uniqueURLGenerator = require('../../public/javascripts/randomcode_generator')
 const Urls = require('../../models/shorturl')
+const uniqueURLGenerator = require('../../public/javascripts/randomcode_generator')
+
+const router = express.Router()
+const main_url = process.env.mainUrl || 'http://localhost:3000/'
 
 router.get('/', (req, res) => {
   res.render('index')
@@ -10,7 +12,8 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
   const original_url = req.body.original_url
-  let short_url = await uniqueURLGenerator()
+  const short_url_code = await uniqueURLGenerator()
+  let short_url
 
   if (validUrl.isUri(original_url) === undefined) {
     const error_message = `${original_url} 並非有效的網址，請重新輸入`
@@ -23,12 +26,23 @@ router.post('/', async (req, res) => {
     .then(result => {
       if (result) {
         short_url = result.short_url
-        return res.render('index', { original_url, short_url })
+        return res.render('index', { short_url })
       }
+      short_url = main_url + short_url_code
       Urls.create({ original_url, short_url })
-        .then(() => res.render('index', { original_url, short_url }))
+        .then(() => res.render('index', { short_url }))
     })
     .catch((error) => console.log(error))
+})
+
+router.get('/:code', (req, res) => {
+  const url_id = req.params.code
+  const short_url = main_url + url_id
+
+  Urls.findOne({ 'short_url': short_url })
+    .lean()
+    .then((result) => res.redirect(result.original_url))
+    .catch((error) => res.redirect('/'))
 })
 
 module.exports = router
