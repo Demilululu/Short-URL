@@ -1,10 +1,10 @@
 const Urls = require('../../models/shorturl')
+const mainUrl = process.env.mainUrl || 'http://localhost:3000/'
 
 function randomIndex(array) {
-  let random_Index = Math.floor(Math.random() * array.length)
-  return array[random_Index]
+  let randomIndex = Math.floor(Math.random() * array.length)
+  return array[randomIndex]
 }
-
 
 function codeGenerator(length) {
   const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz'
@@ -22,15 +22,15 @@ function codeGenerator(length) {
 }
 
 async function uniqueURLGenerator() {
-  let test_url = codeGenerator(5)
+  let testUrl = codeGenerator(5)
 
-  await Urls.findOne({ 'short_url': test_url })
-    .then((result) => {
+  await Urls.findOne({ 'shortUrl': mainUrl + testUrl })
+    .then(async(result) => {
       if (result) {
-        uniqueURLGenerator()
+        testUrl = await uniqueURLGenerator()
       }
     })
-  return test_url
+  return testUrl
 }
 
 module.exports = uniqueURLGenerator

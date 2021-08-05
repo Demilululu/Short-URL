@@ -4,43 +4,43 @@ const Urls = require('../../models/shorturl')
 const uniqueURLGenerator = require('../../public/javascripts/randomcode_generator')
 
 const router = express.Router()
-const main_url = process.env.mainUrl || 'http://localhost:3000/'
+const mainUrl = process.env.mainUrl || 'http://localhost:3000/'
 
 router.get('/', (req, res) => {
   res.render('index')
 })
 
-router.post('/', async (req, res) => {
-  const original_url = req.body.original_url
-  const short_url_code = await uniqueURLGenerator()
-  let short_url
-
-  if (validUrl.isUri(original_url) === undefined) {
-    const error_message = `${original_url} 並非有效的網址，請重新輸入`
-    return res.render('index', { error_message })
+router.post('/', (req, res) => {
+  const originalUrl = req.body.originalUrl
+  let shortUrl = ""
+  console.log(validUrl.isUri(originalUrl))
+  if (validUrl.isUri(originalUrl) === undefined) {
+    const errorMessage = `${originalUrl} 並非有效的網址，請重新輸入`
+    return res.render('index', { errorMessage })
   }
 
-  Urls.findOne({ 'original_url': original_url })
+  Urls.findOne({ originalUrl })
     .lean()
-    .then(result => {
+    .then(async (result) => {
       if (result) {
-        short_url = result.short_url
-        return res.render('index', { short_url })
+        shortUrl = result.shortUrl
+        return res.render('index', { shortUrl })
       }
-      short_url = main_url + short_url_code
-      Urls.create({ original_url, short_url })
-        .then(() => res.render('index', { short_url }))
+      const shortUrlCode = await uniqueURLGenerator()
+      shortUrl = mainUrl + shortUrlCode
+      Urls.create({ originalUrl, shortUrl })
+        .then(() => res.render('index', { shortUrl }))
     })
     .catch((error) => res.redirect('/'))
 })
 
 router.get('/:code', (req, res) => {
-  const url_id = req.params.code
-  const short_url = main_url + url_id
+  const id = req.params.code
+  const shortUrl = mainUrl + id
 
-  Urls.findOne({ 'short_url': short_url })
+  Urls.findOne({ shortUrl })
     .lean()
-    .then((result) => res.redirect(result.original_url))
+    .then((result) => res.redirect(result.originalUrl))
     .catch((error) => res.redirect('/'))
 })
 

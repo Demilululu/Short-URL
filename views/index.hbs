@@ -4,22 +4,22 @@
   </a>
   <img src="/images/url.png" alt="" class="url-image">
 
-  {{#unless short_url}}
+  {{#unless shortUrl}}
   <form action="/" method="POST">
     <div class="form-group">
-      <input type="text" class="form-control input-box" placeholder="Input URL here" name="original_url">
+      <input type="text" class="form-control input-box" placeholder="Input URL here" name="originalUrl">
     </div>
     <div class="warnings">
-      <p>{{error_message}}</p>
+      <p>{{errorMessage}}</p>
     </div>
 
     <button class="btn btn-outline-primary" type="submit">Shorten</button>
   </form>
   {{/unless}}
 
-  {{#if short_url}}
+  {{#if shortUrl}}
   <h3>Success! Please use the link:</h3>
-  <a href="{{short_url}}" id="short_url">{{short_url}}</a><br>
-  <button type="button" class="btn btn-primary" id="copy" data-clipboard-target="#short_url">Copy</button>
+  <a href="{{shortUrl}}" id="short-url">{{shortUrl}}</a><br>
+  <button type="button" class="btn btn-primary" id="copy" data-clipboard-target="#short-url">Copy</button>
   {{/if}}
 </div>
