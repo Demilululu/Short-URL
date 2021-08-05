@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const originalUrl = req.body.originalUrl
   let shortUrl = ""
-  console.log(validUrl.isUri(originalUrl))
+
   if (validUrl.isUri(originalUrl) === undefined) {
     const errorMessage = `${originalUrl} 並非有效的網址，請重新輸入`
     return res.render('index', { errorMessage })
